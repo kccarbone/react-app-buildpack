@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Fail immediately on non-zero exit code
-set -euo pipefail
+set -eu
 
 # Directories
 BUILD_DIR=$1
