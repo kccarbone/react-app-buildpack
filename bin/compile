@@ -15,8 +15,10 @@ TEMP_DIR=$(mktemp -t buildpackXXXXXX)
 rm -rf $TEMP_DIR
 
 echo "=====> Downloading Node.js buildpack"
+echo $TEMP_DIR
+echo $(which git)
 
-git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR >/dev/null 2>&1
+git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR 
 cd $TEMP_DIR
 chmod -f +x $TEMP_DIR/bin/{detect,compile,release}
 
