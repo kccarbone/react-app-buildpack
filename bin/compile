@@ -32,12 +32,12 @@ export_env_dir() {
 
 echo " "
 echo "===> Install Node.js buildpack"
-echo " "
 
 # Download from git
 git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR
 cd $TEMP_DIR
 chmod -f +x $TEMP_DIR/bin/{detect,compile,release} || true
+echo " "
 
 # Run buildpack
 $TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
@@ -55,13 +55,17 @@ echo "     All tests passed"
 echo " "
 echo "===> Compile app"
 cd $BUILD_DIR
+echo " "
 echo $(ls)
+echo " "
+echo $(ls $HOME/.heroku)
+
+# Make node variables available to build
+export_env_dir "$ENV_DIR" '^(REACT_APP_|NODE_)'
 
 export PATH="$HOME/.heroku/node/bin:$HOME/.heroku/yarn/bin:$PATH:$HOME/bin:$HOME/node_modules/.bin"
 export NODE_HOME="$HOME/.heroku/node"
 
-# Make node variables available to build
-export_env_dir "$ENV_DIR" '^(REACT_APP_|NODE_)'
 
 npm run build
 
