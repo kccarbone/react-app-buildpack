@@ -33,6 +33,10 @@ export_env_dir() {
 echo " "
 echo "===> Install Node.js buildpack"
 
+
+echo " "
+echo $(ls $ENV_DIR)
+
 # Download from git
 git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR
 cd $TEMP_DIR
@@ -56,10 +60,10 @@ echo " "
 echo "===> Compile app"
 cd $BUILD_DIR
 echo " "
-echo $(ls)
+echo $(ls -a)
 echo " "
 echo "DEBUG: "
-echo $(which node)
+echo $(ls .heroku)
 echo " "
 echo " "
 
