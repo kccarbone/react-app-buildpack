@@ -20,7 +20,8 @@ echo $(which git)
 
 git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR 
 cd $TEMP_DIR
-chmod -f +x $TEMP_DIR/bin/{detect,compile,release}
+echo $(ls)
+chmod -f +x $TEMP_DIR/bin/{detect,compile,release} || true
 
 echo "=====> Installing"
 
