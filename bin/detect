@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Fail immediately on non-zero exit code
+set -euo pipefail
+
+echo "Checking app package..."
+
+# Basic folder structure detection
+if [ ! -d $1/public2 ]; then
+  echo "FATAL: 'public' folder not found!"
+  exit 1
+fi
+
+echo "React app verified"
+exit 0

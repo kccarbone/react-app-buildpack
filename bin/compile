@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Fail immediately on non-zero exit code
+set -euo pipefail
+
+# Directories
+BUILD_DIR=$1
+CACHE_DIR=$2
+ENV_DIR=$3
+PACK_DIR=`cd $(dirname $0); cd ..; pwd`
+
+echo "Building..."
+
+exit 1
