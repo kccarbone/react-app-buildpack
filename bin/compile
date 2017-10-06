@@ -69,13 +69,6 @@ echo $(ls .heroku/node/bin)
 echo " "
 echo " "
 
-# Make node variables available to build
-export_env_dir "$ENV_DIR" '^(REACT_APP_|NODE_)'
-
-export PATH="$HOME/.heroku/node/bin:$HOME/.heroku/yarn/bin:$PATH:$HOME/bin:$HOME/node_modules/.bin"
-export NODE_HOME="$HOME/.heroku/node"
-
-
-npm run build
+./.heroku/node/bin/npm run build
 
 exit 1
