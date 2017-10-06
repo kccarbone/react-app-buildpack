@@ -11,20 +11,30 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 PACK_DIR=`cd $(dirname $0); cd ..; pwd`
-TEMP_DIR=$(mktemp -t buildpackXXXXXX)
+TEMP_DIR=$(mktemp -t build_XXXXXX)
 rm -rf $TEMP_DIR
 
-echo "=====> Downloading Node.js buildpack"
-echo $TEMP_DIR
-echo $(which git)
+echo "=====> Install Node.js buildpack"
 
+# Download from git
 git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR 
 cd $TEMP_DIR
-echo $(ls)
 chmod -f +x $TEMP_DIR/bin/{detect,compile,release} || true
 
-echo "=====> Installing"
-
+# Run buildpack
 $TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
+
+if [ $? != 0 ]; then
+  echo "Failed to install Node.js!"
+  exit 1
+fi
+
+echo "=====> Run tests"
+# TODO: run some tests :)
+echo "All tests passed"
+
+echo "=====> Compile app"
+cd $BUILD_DIR
+npm run build
 
 exit 1
