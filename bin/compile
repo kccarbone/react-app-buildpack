@@ -4,10 +4,6 @@
 set -eu
 unset GIT_DIR
 
-# Set npm vars so that build tools are included
-export NPM_CONFIG_PRODUCTION=false
-export NODE_ENV=development
-
 # Directories
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -16,22 +12,14 @@ PACK_DIR=`cd $(dirname $0); cd ..; pwd`
 TEMP_DIR=$(mktemp -t build_XXXXXX)
 rm -rf $TEMP_DIR
 
-# Generic env variable function
-export_env_dir() {
-  local env_dir=$1
-  local whitelist_regex=${2:-''}
-  local blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH|IFS)$'}
-  if [ -d "$env_dir" ]; then
-    for e in $(ls $env_dir); do
-      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
-      export "$e=$(cat $env_dir/$e)"
-      :
-    done
-  fi
-}
+# Set npm vars so that build tools are included
+export NPM_CONFIG_PRODUCTION=false
+export NODE_ENV=development
+export NODE_PATH=$BUILD_DIR/.heroku/node/bin/
+export PATH=$PATH:$BUILD_DIR/.heroku/node/bin/
 
 echo " "
-echo "===> Install Node.js buildpack"
+echo "===> Install Node.js buildpack!"
 
 # Download from git
 git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR
@@ -55,9 +43,6 @@ echo "     All tests passed"
 echo " "
 echo "===> Compile app"
 cd $BUILD_DIR
-
-export PATH=$PATH:$BUILD_DIR/.heroku/node/bin/
-
 npm run build
 
 exit 1
