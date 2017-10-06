@@ -16,9 +16,22 @@ PACK_DIR=`cd $(dirname $0); cd ..; pwd`
 TEMP_DIR=$(mktemp -t build_XXXXXX)
 rm -rf $TEMP_DIR
 
-echo ""
-echo "===> Install Node.js buildpack"
-echo ""
+# Generic env variable function
+export_env_dir() {
+  local env_dir=$1
+  local whitelist_regex=${2:-''}
+  local blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH|IFS)$'}
+  if [ -d "$env_dir" ]; then
+    for e in $(ls $env_dir); do
+      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+      export "$e=$(cat $env_dir/$e)"
+      :
+    done
+  fi
+}
+
+
+echo "\n===> Install Node.js buildpack\n"
 
 # Download from git
 git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR
@@ -29,18 +42,22 @@ chmod -f +x $TEMP_DIR/bin/{detect,compile,release} || true
 $TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
 if [ $? != 0 ]; then
-  echo "    Failed to install Node.js!"
+  echo "     Failed to install Node.js!"
   exit 1
 fi
 
-echo ""
-echo "===> Run tests"
+echo "\n===> Run tests"
 # TODO: run some tests :)
-echo "    All tests passed"
+echo "     All tests passed"
 
-echo ""
-echo "===> Compile app"
+echo "\n===> Compile app"
 cd $BUILD_DIR
+echo $(ls)
+
+
+# Make node variables available to build
+export_env_dir "$ENV_DIR" '^(REACT_APP_|NODE_)'
+
 npm run build
 
 exit 1
