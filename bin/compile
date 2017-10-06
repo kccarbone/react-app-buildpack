@@ -4,7 +4,9 @@
 set -eu
 unset GIT_DIR
 
-echo "Folder structure verified."
+# Set npm vars so that build tools are included
+export NPM_CONFIG_PRODUCTION=false
+export NODE_ENV=development
 
 # Directories
 BUILD_DIR=$1
@@ -14,10 +16,12 @@ PACK_DIR=`cd $(dirname $0); cd ..; pwd`
 TEMP_DIR=$(mktemp -t build_XXXXXX)
 rm -rf $TEMP_DIR
 
-echo "=====> Install Node.js buildpack"
+echo ""
+echo "===> Install Node.js buildpack"
+echo ""
 
 # Download from git
-git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR 
+git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR
 cd $TEMP_DIR
 chmod -f +x $TEMP_DIR/bin/{detect,compile,release} || true
 
@@ -25,15 +29,17 @@ chmod -f +x $TEMP_DIR/bin/{detect,compile,release} || true
 $TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
 if [ $? != 0 ]; then
-  echo "Failed to install Node.js!"
+  echo "    Failed to install Node.js!"
   exit 1
 fi
 
-echo "=====> Run tests"
+echo ""
+echo "===> Run tests"
 # TODO: run some tests :)
-echo "All tests passed"
+echo "    All tests passed"
 
-echo "=====> Compile app"
+echo ""
+echo "===> Compile app"
 cd $BUILD_DIR
 npm run build
 
