@@ -4,7 +4,8 @@
 set -eu
 
 # Basic folder structure detection
-if [ ! -d $1/public ]; then
+if [ ! -d $1/public2 ]; then
+  >&2 echo 'public folder not found!'
   exit 1
 fi
 
