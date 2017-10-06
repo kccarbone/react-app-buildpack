@@ -58,7 +58,10 @@ cd $BUILD_DIR
 echo " "
 echo $(ls)
 echo " "
-echo $(ls $HOME/.heroku)
+echo "DEBUG: "
+echo $(which node)
+echo " "
+echo " "
 
 # Make node variables available to build
 export_env_dir "$ENV_DIR" '^(REACT_APP_|NODE_)'
