@@ -2,6 +2,7 @@
 
 # Fail immediately on non-zero exit code
 set -eu
+unset GIT_DIR
 
 echo "Folder structure verified."
 

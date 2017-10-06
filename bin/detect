@@ -8,5 +8,5 @@ if [ ! -d $1/public ]; then
   exit 1
 fi
 
-echo "React app"
+echo "React"
 exit 0
