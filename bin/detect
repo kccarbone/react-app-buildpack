@@ -6,7 +6,7 @@ set -eu
 echo "Checking app package..."
 
 # Basic folder structure detection
-if [ ! -d $1/public2 ]; then
+if [ ! -d $1/public ]; then
   echo "FATAL: 'public' folder not found!"
   exit 1
 fi
