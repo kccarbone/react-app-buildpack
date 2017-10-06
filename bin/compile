@@ -35,6 +35,7 @@ echo "===> Install Node.js buildpack"
 
 
 echo " "
+echo $ENV_DIR
 echo $(ls "$ENV_DIR")
 echo " "
 
@@ -64,7 +65,7 @@ echo " "
 echo $(ls -a)
 echo " "
 echo "DEBUG: "
-echo $(ls .heroku/node)
+echo $(ls .heroku/node/bin)
 echo " "
 echo " "
 
