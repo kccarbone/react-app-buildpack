@@ -3,13 +3,10 @@
 # Fail immediately on non-zero exit code
 set -eu
 
-echo "Checking app package..."
-
 # Basic folder structure detection
 if [ ! -d $1/public ]; then
-  echo "FATAL: 'public' folder not found!"
   exit 1
 fi
 
-echo "React app verified"
+echo "React app"
 exit 0

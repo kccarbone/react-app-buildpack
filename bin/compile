@@ -3,12 +3,24 @@
 # Fail immediately on non-zero exit code
 set -eu
 
+echo "Folder structure verified."
+
 # Directories
 BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 PACK_DIR=`cd $(dirname $0); cd ..; pwd`
+TEMP_DIR=$(mktemp -t buildpackXXXXXX)
+rm -rf $TEMP_DIR
 
-echo "Building..."
+echo "=====> Downloading Node.js buildpack"
+
+git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR >/dev/null 2>&1
+cd $TEMP_DIR
+chmod -f +x $TEMP_DIR/bin/{detect,compile,release}
+
+echo "=====> Installing"
+
+$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
 exit 1
