@@ -45,4 +45,4 @@ echo "===> Compile app3"
 cd $BUILD_DIR
 npm run build-prod
 
-exit 1
+exit 0
