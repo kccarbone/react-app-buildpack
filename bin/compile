@@ -41,7 +41,7 @@ echo "===> Run tests"
 echo "     All tests passed"
 
 echo " "
-echo "===> Compile app 7"
+echo "===> Compile app"
 cd $BUILD_DIR
 
 # Build the react app
@@ -60,7 +60,8 @@ find . -type d -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
 rmdir dist
 
 # Install dependencies for public site
-$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
+#$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
+./.heroku/yarn/bin/yarn install
 
 # Add a basic procfile to start the site
 echo "web: npm start" >> Procfile
