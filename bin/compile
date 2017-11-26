@@ -4,6 +4,14 @@
 set -eu
 unset GIT_DIR
 
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
 # Directories
 BUILD_DIR=$1
 CACHE_DIR=$2
@@ -58,14 +66,17 @@ find . -type f -maxdepth 1 -exec rm -Rf -- {} \;
 find . -type f -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
 find . -type d -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
 rmdir dist
-echo " "
-echo $(ls)
-echo " "
 
 # Install dependencies for public site
 $TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
 # Add a basic procfile to start the site
 echo "web: npm start" >> Procfile
+
+echo " "
+echo "===> Done! Final manifest:"
+echo " "
+echo "$(find . -not -name .)"
+echo " "
 
 exit 0
