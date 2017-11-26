@@ -41,7 +41,7 @@ echo "===> Run tests"
 echo "     All tests passed"
 
 echo " "
-echo "===> Compile app 6"
+echo "===> Compile app 7"
 cd $BUILD_DIR
 
 # Build the react app
@@ -58,11 +58,14 @@ find . -type f -maxdepth 1 -exec rm -Rf -- {} \;
 find . -type f -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
 find . -type d -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
 rmdir dist
-echo $(ls -l -a)
+echo " "
+echo $(ls)
+echo " "
 
 # Install dependencies for public site
-npm install
+$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 
+# Add a basic procfile to start the site
 echo "web: npm start" >> Procfile
 
 exit 0
