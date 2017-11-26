@@ -55,8 +55,8 @@ find . -type d -maxdepth 1 -not -path "./dist*" -not -name . -exec rm -Rf -- {} 
 find . -type f -maxdepth 1 -exec rm -Rf -- {} \;
 
 # Move contents of the "dist" folder to the current directory
-find . -type d -mindepth 2 -exec mv -- {} . \;
-find . -type f -mindepth 2 -exec mv -- {} . \;
+find . -type f -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
+find . -type d -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
 rmdir dist
 echo $(ls -l -a)
 
