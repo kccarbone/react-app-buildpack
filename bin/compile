@@ -71,7 +71,7 @@ echo "web: npm start" >> Procfile
 
 echo " "
 echo "===> Done! Final manifest:"
-echo "$(find . -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
+echo "$(find . -type f -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
 echo " "
 
 exit 0
