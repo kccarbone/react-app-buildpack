@@ -41,7 +41,7 @@ echo "===> Run tests"
 echo "     All tests passed"
 
 echo " "
-echo "===> Compile app3"
+echo "===> Compile app4"
 cd $BUILD_DIR
 npm run build-prod
 
