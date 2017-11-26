@@ -9,5 +9,6 @@ if [ ! -d $1/public ]; then
   exit 1
 fi
 
+# On success, return the name of the app type
 echo "React"
 exit 0
