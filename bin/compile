@@ -59,6 +59,16 @@ find . -type f -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
 find . -type d -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
 rmdir dist
 
+echo " "
+echo "===> TEST"
+echo " "
+echo "pwd: $(pwd)"
+echo " "
+echo "$(find . -not -name . -not -path '*node_modules*')"
+echo " "
+echo " "
+echo " "
+
 # Install dependencies for public site
 #$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 ./.heroku/yarn/bin/yarn install
