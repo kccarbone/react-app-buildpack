@@ -45,7 +45,7 @@ echo "===> Compile app 7"
 cd $BUILD_DIR
 
 # Build the react app
-npm run build-prod | (while read; do echo "      $REPLY"; done)
+npm run build-prod
 
 echo " "
 echo "===> Compile public site"
@@ -68,7 +68,8 @@ echo "web: npm start" >> Procfile
 echo " "
 echo "===> Done! Final manifest:"
 echo " "
-echo "$(find . -not -name .)"
+echo "$(find . -not -name . -not -path '*node_modules*')"
 echo " "
+echo "$(npm -v)"
 
 exit 0
