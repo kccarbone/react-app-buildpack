@@ -19,7 +19,7 @@ export NODE_PATH=$BUILD_DIR/.heroku/node/bin/
 export PATH=$PATH:$BUILD_DIR/.heroku/node/bin/
 
 echo " "
-echo "===> Install Node.js buildpack!"
+echo "===> Install Node.js buildpack"
 
 # Download from git
 git clone https://github.com/heroku/heroku-buildpack-nodejs.git $TEMP_DIR
@@ -41,8 +41,11 @@ echo "===> Run tests"
 echo "     All tests passed"
 
 echo " "
-echo "===> Compile app4"
+echo "===> Compile app"
 cd $BUILD_DIR
 npm run build-prod
+
+echo "web: npm start" >> Procfile
+echo $(ls -la)
 
 exit 0
