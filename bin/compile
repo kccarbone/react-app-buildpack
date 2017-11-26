@@ -41,11 +41,27 @@ echo "===> Run tests"
 echo "     All tests passed"
 
 echo " "
-echo "===> Compile app"
+echo "===> Compile app 5"
 cd $BUILD_DIR
+
+# Build the react app
 npm run build-prod
 
+echo " "
+echo "===> Compile public site"
+
+# Delete everything except the "dist" folder
+find . -type d -maxdepth 1 -not -path "./dist*" -not -name . -exec rm -Rf -- {} \;
+find . -type f -maxdepth 1 -exec rm -Rf -- {} \;
+
+# Move contents of the "dist" folder to the current directory
+find . -mindepth 2 -exec mv -- {} . \;
+rmdir dist
+echo $(ls -l -a)
+
+# Install dependencies for public site
+npm install
+
 echo "web: npm start" >> Procfile
-echo $(ls -la)
 
 exit 0
