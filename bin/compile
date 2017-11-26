@@ -41,8 +41,8 @@ echo "===> Run tests"
 echo "     All tests passed"
 
 echo " "
-echo "===> Compile app2"
+echo "===> Compile app3"
 cd $BUILD_DIR
-yarn run build-prod
+npm run build-prod
 
 exit 1
