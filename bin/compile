@@ -67,13 +67,11 @@ rmdir dist
 $YARN_BIN install
 
 # Add a basic procfile to start the site
-echo "web: $YARN_BIN start" >> Procfile
+echo "web: npm start" >> Procfile
 
 echo " "
 echo "===> Done! Final manifest:"
-echo " "
 echo "$(find . -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
 echo " "
-echo "$(npm -v)"
 
 exit 0
