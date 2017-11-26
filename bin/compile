@@ -35,6 +35,9 @@ if [ $? != 0 ]; then
   exit 1
 fi
 
+# Yarn is installed here
+YARN_BIN='./.heroku/yarn/bin/yarn'
+
 echo " "
 echo "===> Run tests"
 # TODO: run some tests :)
@@ -51,18 +54,20 @@ echo " "
 echo "===> Compile public site"
 
 # Delete everything except the "dist" folder
-find . -type d -maxdepth 1 -not -path "./dist*" -not -name . -exec rm -Rf -- {} \;
+find . -type d -maxdepth 1 -not -path "./dist*" -not -path "./.heroku*" -not -name . -exec rm -Rf -- {} \;
 find . -type f -maxdepth 1 -exec rm -Rf -- {} \;
 
 # Move contents of the "dist" folder to the current directory
-find . -type f -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
-find . -type d -mindepth 2 -maxdepth 2 -exec mv -- {} . \;
+find . -type f -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -exec mv -- {} . \;
+find . -type d -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -exec mv -- {} . \;
 rmdir dist
 
 echo " "
 echo "===> TEST"
 echo " "
 echo "pwd: $(pwd)"
+echo " "
+echo "yarn: $($YARN_BIN)"
 echo " "
 echo "$(find . -not -name . -not -path '*node_modules*')"
 echo " "
@@ -71,7 +76,7 @@ echo " "
 
 # Install dependencies for public site
 #$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
-./.heroku/yarn/bin/yarn install
+$YARN_BIN install
 
 # Add a basic procfile to start the site
 echo "web: npm start" >> Procfile
