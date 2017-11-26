@@ -48,12 +48,12 @@ echo "===> Compile app"
 cd $BUILD_DIR
 
 # Build the react app
-npm run build-prod
+$YARN_BIN run build-prod
 
 echo " "
 echo "===> Compile public site"
 
-# Delete everything except the "dist" folder
+# Delete everything except the "dist" and ".heroku" folders
 find . -type d -maxdepth 1 -not -path "./dist*" -not -path "./.heroku*" -not -name . -exec rm -Rf -- {} \;
 find . -type f -maxdepth 1 -exec rm -Rf -- {} \;
 
@@ -62,29 +62,17 @@ find . -type f -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -exec mv -- {} . 
 find . -type d -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -exec mv -- {} . \;
 rmdir dist
 
-echo " "
-echo "===> TEST"
-echo " "
-echo "pwd: $(pwd)"
-echo " "
-echo "yarn: $($YARN_BIN)"
-echo " "
-echo "$(find . -not -name . -not -path '*node_modules*')"
-echo " "
-echo " "
-echo " "
-
 # Install dependencies for public site
 #$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 $YARN_BIN install
 
 # Add a basic procfile to start the site
-echo "web: npm start" >> Procfile
+echo "web: $YARN_BIN start" >> Procfile
 
 echo " "
 echo "===> Done! Final manifest:"
 echo " "
-echo "$(find . -not -name . -not -path '*node_modules*')"
+echo "$(find . -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
 echo " "
 echo "$(npm -v)"
 
