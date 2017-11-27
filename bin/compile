@@ -13,8 +13,8 @@ TEMP_DIR=$(mktemp -t build_XXXXXX)
 rm -rf $TEMP_DIR
 
 # Set npm vars so that build tools are included
-export NPM_CONFIG_PRODUCTION=false
-export NODE_ENV=development
+export NPM_CONFIG_PRODUCTION=true
+export NODE_ENV=production
 export NODE_PATH=$BUILD_DIR/.heroku/node/bin/
 export PATH=$PATH:$BUILD_DIR/.heroku/node/bin/
 
