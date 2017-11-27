@@ -37,7 +37,6 @@ fi
 
 # Yarn is installed here
 YARN_BIN='./.heroku/yarn/bin/yarn'
-echo "$(find . -type f -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
 
 echo " "
 echo "===> Run tests"
@@ -50,6 +49,7 @@ cd $BUILD_DIR
 
 # Build the react app
 $YARN_BIN run build-prod
+echo "$(find . -type f -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
 
 echo " "
 echo "===> Compile public site"
@@ -66,7 +66,7 @@ rmdir dist
 # Install dependencies for public site
 #$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 $YARN_BIN install
-rmdir .heroku
+rm -Rf .heroku
 
 # Add a basic procfile to start the site
 echo "web: npm start" >> Procfile
