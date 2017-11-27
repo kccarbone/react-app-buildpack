@@ -55,12 +55,12 @@ echo " "
 echo "===> Compile public site"
 
 # Delete everything except the "dist" and ".heroku" folders
-find . -type d -maxdepth 1 -not -path "./dist*" -not -path "./.heroku*" -not -name . -exec rm -Rf -- {} \;
+find . -type d -maxdepth 1 -not -path "./dist*" -not -path "./.heroku*" -not -path "./.profile.d*" -not -name . -exec rm -Rf -- {} \;
 find . -type f -maxdepth 1 -exec rm -Rf -- {} \;
 
 # Move contents of the "dist" folder to the current directory
-find . -type f -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -exec mv -- {} . \;
-find . -type d -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -exec mv -- {} . \;
+find . -type f -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -not -path "./.profile.d*" -exec mv -- {} . \;
+find . -type d -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -not -path "./.profile.d*" -exec mv -- {} . \;
 rmdir dist
 
 # Install dependencies for public site
@@ -75,5 +75,6 @@ echo " "
 echo "===> Done! Final manifest:"
 echo "$(find . -type f -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
 echo " "
+echo "$(cat .profile.d/nodejs.sh)"
 
 exit 0
