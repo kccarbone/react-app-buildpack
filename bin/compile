@@ -63,7 +63,6 @@ find . -type d -mindepth 2 -maxdepth 2 -not -path "./.heroku*" -not -path "./.pr
 rmdir dist
 
 # Install dependencies for public site
-#$TEMP_DIR/bin/compile $BUILD_DIR $CACHE_DIR $ENV_DIR
 $YARN_BIN install
 
 # Add a basic procfile to start the site
