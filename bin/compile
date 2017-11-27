@@ -49,7 +49,7 @@ cd $BUILD_DIR
 
 # Build the react app
 $YARN_BIN run build-prod
-echo "$(find . -type f -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
+echo "$(find . -type f -not -name . -not -path '*node_modules*')"
 
 echo " "
 echo "===> Compile public site"
@@ -69,12 +69,15 @@ $YARN_BIN install
 rm -Rf .heroku
 
 # Add a basic procfile to start the site
-echo "web: npm start" >> Procfile
+echo "web: yarn start" >> Procfile
 
 echo " "
 echo "===> Done! Final manifest:"
-echo "$(find . -type f -not -name . -not -path '*node_modules*' -not -path './.heroku*')"
+echo "$(find . -type f -not -name . -not -path '*node_modules*')"
 echo " "
 echo "$(cat .profile.d/nodejs.sh)"
+echo " "
+echo "$(cat .profile.d/WEB_CONCURRENCY.sh)"
+echo " "
 
 exit 0
